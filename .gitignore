@@ -1,0 +1,15 @@
+# Terraform
+eks-terraform/.terraform/
+*.tfstate
+*.tfstate.*
+crash.log
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+
+# Logs
+*.log
