@@ -8,4 +8,4 @@ spec:
     app: {{ .Release.Name }}
   ports:
     - port: {{ .Values.service.port }}
-      targetPort: 5000
+      targetPort: {{ .Values.service.targetPort }}

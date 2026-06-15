@@ -1,13 +1,14 @@
-replicaCount: 1
+replicaCount: 2
 
 image:
   repository: 308324916327.dkr.ecr.us-east-1.amazonaws.com/hello-world-app
   tag: latest
-  pullPolicy: IfNotPresent
+  pullPolicy: Always
 
 service:
-  type: ClusterIP
+  type: LoadBalancer
   port: 80
+  targetPort: 5000
 
 ingress:
   enabled: true
@@ -16,18 +17,13 @@ ingress:
     kubernetes.io/ingress.class: alb
     alb.ingress.kubernetes.io/scheme: internet-facing
     alb.ingress.kubernetes.io/target-type: ip
-  hosts:
-    - host: "*"
-      paths:
-        - path: /
-          pathType: Prefix
-
-# 🔥 THIS IS THE FIX (IMPORTANT)
-serviceAccount:
-  create: true
-  automount: true
-  annotations: {}
-  name: ""
+    alb.ingress.kubernetes.io/listen-ports: '[{"HTTP":80}]'
 
 autoscaling:
-  enabled: false
+  enabled: true
+  minReplicas: 2
+  maxReplicas: 5
+  targetCPUUtilizationPercentage: 70
+
+serviceAccount:
+  create: true
