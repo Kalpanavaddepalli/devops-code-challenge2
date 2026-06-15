@@ -1,0 +1,26 @@
+replicaCount: 1
+
+image:
+  repository: 308324916327.dkr.ecr.us-east-1.amazonaws.com/hello-world-app
+  tag: latest
+  pullPolicy: IfNotPresent
+
+service:
+  type: ClusterIP
+  port: 80
+
+ingress:
+  enabled: true
+  className: alb
+  annotations:
+    kubernetes.io/ingress.class: alb
+    alb.ingress.kubernetes.io/scheme: internet-facing
+    alb.ingress.kubernetes.io/target-type: ip
+  hosts:
+    - host: "*"
+      paths:
+        - path: /
+          pathType: Prefix
+
+autoscaling:
+  enabled: false
