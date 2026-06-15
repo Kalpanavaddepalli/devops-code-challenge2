@@ -1,14 +1,13 @@
-replicaCount: 2
+replicaCount: 1
 
 image:
   repository: 308324916327.dkr.ecr.us-east-1.amazonaws.com/hello-world-app
   tag: latest
-  pullPolicy: Always
+  pullPolicy: IfNotPresent
 
 service:
-  type: LoadBalancer
+  type: ClusterIP
   port: 80
-  targetPort: 5000
 
 ingress:
   enabled: true
@@ -23,8 +22,12 @@ ingress:
         - path: /
           pathType: Prefix
 
+# 🔥 THIS IS THE FIX (IMPORTANT)
+serviceAccount:
+  create: true
+  automount: true
+  annotations: {}
+  name: ""
+
 autoscaling:
-  enabled: true
-  minReplicas: 2
-  maxReplicas: 5
-  targetCPUUtilizationPercentage: 70
+  enabled: false
