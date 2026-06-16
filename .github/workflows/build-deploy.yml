@@ -27,7 +27,7 @@ jobs:
 
       - name: Build Docker image
         run: |
-          docker build -t hello-world-app .
+          docker build -t hello-world-app ./app
 
       - name: Tag image
         run: |
