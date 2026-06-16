@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hello-app
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: hello-app
+
+  strategy:
+    type: RollingUpdate
+
+  template:
+    metadata:
+      labels:
+        app: hello-app
+
+    spec:
+      containers:
+        - name: hello-app
+          image: 308324916327.dkr.ecr.us-east-1.amazonaws.com/hello-world-app:latest
+          imagePullPolicy: Always
+
+          ports:
+            - containerPort: 5000
+
+          # ✅ IMPORTANT FIX FOR HPA
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "128Mi"
+            limits:
+              cpu: "500m"
+              memory: "256Mi"
