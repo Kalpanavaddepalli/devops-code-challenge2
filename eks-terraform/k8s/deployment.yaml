@@ -26,7 +26,6 @@ spec:
           ports:
             - containerPort: 5000
 
-          # ✅ IMPORTANT FIX FOR HPA
           resources:
             requests:
               cpu: "100m"
